@@ -1,0 +1,1 @@
+makensis /V4 /Oinstall.log /PAUSE /NOCONFIG OpenWiki.nsi

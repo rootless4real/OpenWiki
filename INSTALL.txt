@@ -1,0 +1,81 @@
+
+Lastest information:
+--------------------
+please see the following links for up-to-date installation instructions 
+and problem resolutions.
+
+http://openwiki.com/?HelpOnInstallation
+http://openwiki.com/?SysAdmin
+
+
+Requirements
+------------
+Before OpenWiki can run you must have the following components installed:
+    
+    o  MS ADO.DB v2.5 or higher
+    o  VBScript v5.5 or higher
+    o  MSXML v3 SP2 or higher
+    o  A Web Server (i.e. PWS or IIS)
+    o  A database like MS Access, SQL-Server, Oracle or MySQL
+    
+Usually on a standard installed Windows OS all these components are already
+present.
+
+Furthermore, if you want to allow file uploads to your wiki, then the
+following component must be installed:
+
+    o  ABC Upload v4 from WebSupergoo
+
+See the URLs above where you can get these components.
+
+
+Database:
+---------
+By default OpenWiki works with an MS Access database. If you had 
+installed the "Sample Application" you'll notice that in the ODBC Data
+Source Manager (in Control Panel - Administrative Tools) there's
+a new data source called "OpenWikiDist". If it's not there, create one, 
+and point it to the distribution database (that is file
+<install-dir>\data\OpenWikiDist.mdb).
+
+Make sure that the variable OPENWIKI_DB in file owconfig-default.asp
+is set correctly.
+
+If you want to run OpenWiki using MS SQL-Server, first run the DDL 
+statements from file <install-dir>\data\OpenWiki-SqlServer, and then 
+simply import the MS Access database into your SQL Server database.
+
+
+If you're using an Oracle database add the following line to your
+config file:
+
+    OPENWIKI_DB_SYNTAX = DB_ORACLE
+    
+You can find the Oracle DDL statements to create a virgin openwiki
+database in file <install-dir>\data\OpenWiki-Oracle.sql.
+
+    
+If you're using a MySQL database add the following line to your
+config file:
+
+    OPENWIKI_DB_SYNTAX = DB_MYSQL
+
+You can find the MySQL DDL statements to create a virgin openwiki
+database in file <install-dir>\data\OpenWiki-MySQL.sql.
+
+
+Web Server:
+-----------
+
+o create website or virtual directory pointing to <install-dir>\owbase.
+o point your browser to the website or virtual directory. that's all.
+
+
+Running multiple websites using one OpenWiki codebase
+-----------------------------------------------------
+
+See example \web1 
+o  create website or virtual directory MyWeb, point to <install-dir>\web1
+o  create virtual directory within "MyWeb", name it "ow" and point it 
+   to <install-dir>\owbase\ow.
+o  point your browser to the website or virtual directory "MyWeb". that's all.

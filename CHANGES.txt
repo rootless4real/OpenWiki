@@ -1,0 +1,311 @@
+---------------------------------------------------------------------------
+Copyright(c) 2000-2002, Lawrence Pit
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  * Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the following
+    disclaimer in the documentation and/or other materials provided
+    with the distribution.
+  * Neither the name of OpenWiki nor the names of its contributors
+    may be used to endorse or promote products derived from this
+    software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+---------------------------------------------------------------------------
+
+OpenWiki v0.78 sp1:
+
+- solved bug: This: links (see e.g. RecentChanges) are now rendered as
+              internal links.
+- solved bug: Using <RecentChangesLong> in ActionRss instead of <RecentChanges>
+- solved bug: header pattern
+- script OpenWiki-SqlServer.sql wasn't complete
+
+---------------------------------------------------------------------------
+
+OpenWiki v0.78:
+
+- new feature: MySQL support
+- new feature: ProcessingInstruction MINOREDIT. If present the checkbox "Include
+  page in RecentChanges list" is by default unchecked.
+- new feature: stop words. (based on suggestion from Andrew Finkenstadt)
+  You can maintain stop words via the wiki, by default the page StopWords is
+  used. You can still hyperlink stopwords if you want by using the bracketed
+  form, e.g. [StopWords This stop word is hyperlinked]
+  - added system constant: OPENWIKI_STOPWORDS
+  - added gStopWords
+  - modified MultiLineMarkup
+- new feature: attachments.
+  - added system constant OPENWIKI_IMAGEPATH
+  - added system constant OPENWIKI_UPLOADDIR
+  - added system constant OPENWIKI_MAXUPLOADSIZE
+  - added system constant OPENWIKI_UPLOADTIMEOUT
+  - added major system option: cAllowAttachments
+  - added global variable: gNotAcceptedExtensions
+  - removed global variable: gDocPattern
+  - added ow:body/ow:attachment
+  - added ow:page/ow:attachments
+  - added ow:page/ow:attachments/ow:attachment
+  - added /ow:wiki/ow:imagepath
+  - added /ow:wiki/ow:iconpath
+  - added owattach.asp
+  - added owattach.xsl
+  - slightly modified ow.xsl
+- new feature: embedded mode
+  - added script control.asp to show how to embed this code as a
+    control into another application.
+  - added major system option: cEmbeddedMode
+  - added function TransformEmbedded
+  - modified ow.xsl: added code to support mode='embedded'
+- new feature: template linking (based on code by Dan Rawsthorne)
+  - added major system option: cTemplateLinking
+  - modified gLinkPattern
+  - modified sub GetWikiLink
+  - modified WikiPage.ToLinkXML, added pTemplate parameter
+- new feature: support for internal anchors.
+- new feature: macro <Footnote(this is some footnote text)>
+- new feature: macro <TextSearch(...)> : is same as FullSearch except it
+               doesn't include page titles.
+- new feature: using SixSingleQuotes to escape search patterns in macros.
+- new feature: caching page objects (based on code by Andrew Finkenstadt)
+- new feature: major system option: cCacheXML
+               caching complete wikified results (i.e. the complete ow:page
+               XML island) in most cases this results in only 1 database
+               read to render a page.
+- new feature: processing instruction #INCLUDE_AS_TEMPLATE
+               if defined on a page that gets included into another page
+               all subpages in the included page are taken to be relative
+               to the including page.
+- new feature: CTRL-S to save text changes (code by Andrew Finkenstadt)
+- new feature: confirm unsaved text changes (code by Andrew Finkenstadt)
+- new feature: cAcronymLinks (code by Andrew Finkenstadt)
+- new feature: >>some text<< will center the text (also works in tables).
+- new feature: !!some text!! will display the text in big bold letters.
+- new feature: ^^some text^^ will display the text in superscript letters.
+- new feature: vvsome textvv will display the text in subscript letters.
+- new feature: minor system option: cAllowCharRefs
+- new feature: minor system option: cWikifyHeaders
+- change: RecentChanges macro shows shortversion of recent changes, while
+          macro RecentChangesLong shows the long version of recent changes.
+- change: added OPENWIKI_DB_SYNTAX and constants DB_ACCESS, DB_SQLSERVER,
+          DB_ORACLE, DB_MYSQL and DB_POSTGRESQL.
+- change: ability to share code base by many websites
+- change: modularized code (after 1G pressure from TheRestOfTheWorld ;-)
+  - added macro Glossary as an example to mymacros.asp
+  - added macro Files as an example to mymacros.asp
+  - added PI #STOPWORDS as an example to mywikify.asp
+  - added tag <comment> as an example to mywikify.asp
+- change: improved deprecate.asp
+- change: using owado.asp instead of
+          <!--METADATA TYPE="TypeLib"
+                       NAME="ADODB Type Library"
+                       UUID="{00000205-0000-0010-8000-00AA006D2EA4}"-->
+- change: processing instructions are /not/ processed when they are part of an
+          included page.
+- solved bug: ISBN numbers followed by text starting with the letter X.
+- solved bug: using linkpattern for bookmarks prevents links to valid pages
+- solved bug: searching on free links when clicking page title
+- solved bug: improved pesky little function called EscapePattern.
+- solved bug: macro TableOfContents when used in included pages, order of items
+- solved bug: headers in included pages didn't render
+- solved bug: =============\n=== Header ===\n didn't render correctly
+- solved bug: ability to include subpages and relative subpages
+- solved bug: ability to aggregate subpages and relative subpages
+- solved bug: circular references when including pages
+- solved bug: ]]> characters encoded in PCDATAEncode
+- solved bug: numbered lists
+- solved bug: set content-type to text/xml when writing out RSS feed
+- solved bug: bracketed indexed links
+- solved bug: horizontal rules are formatted before strikeouts.
+- solved bug: added vConn to OpenWikiNamespace.Class_Initialize; tested on W98
+              machine
+
+---------------------------------------------------------------------------
+
+OpenWiki v0.77
+
+- solved bug: added ActionNaked to handle redirection in naked mode.
+- solved bug: searching for test_search.
+- solved bug: <code>$2</code> does not work.
+- solved bug: tableofcontents using numbered lists.
+- solved bug: type mismatch with Oracle DB using wpg_changes column
+- solved bug: SixSingleQuotes
+- change: templates ow:link, ow:bookmarks, ow:trail modified in ow.xsl.
+- change: wiki names in headings are not automatically linked anymore.
+- change: output from a=diff improved.
+- added minor system option: cNTAuthentication (code by Dave Brookes)
+- added minor system option: cShowBrackets
+- added URL parameter v=rss. When you add &v=rss to certain pages the
+  page will be shown in RSS 1.0 format. E.g. ?p=TitleIndex&v=rss will show
+  all the titles in your wiki in RSS 1.0 format.
+  Or ?a=fullsearch&text=Hello&v=rss will show all pages that contain the
+  word 'Hello' in RSS 1.0 format.
+- implemented RSS Wiki Module, mod_wiki v0.5, see Meatball:ModWiki
+- added column agr_rsslink type=text(255) to table openwiki_rss_aggregations
+- added element /ow:wiki/ow:about
+' Revision 1.24  2001/11/24 13:57:53  pit
+- Added OPENWIKI_DAYSTOKEEP
+  Implemented Meatball:KeptPages
+- cookie problem solved by using hashvalue gCookieHash as part of the names
+  meaning: any cookies previously saved will be lost!
+- //This is italic// should transform to italic text instead of to
+  the subpage /<a href="...">/This</a> is italic//
+- stylesheet adapted to conform to XHTML
+- stylesheet slightly adapted: when right-click Open in New window on help
+  links in edit mode, the help page will appear in view mode, instead of in
+  naked mode.
+- [FooBar Some Text] will show Some Text when the current page is FooBar
+- solved bug: bookmarks do not support extended characters
+- incorporated changes from Dan Rawsthorne:
+  - added system option cNumTOC
+  - added system option cDirectEdit
+  - when "" login to read and "something" for edit, edit didn't work.
+
+---------------------------------------------------------------------------
+
+OpenWiki v0.76:
+
+- modified subpages pattern. E.g. /Foo/Bar/Xun/Wol will result in one
+  pagelink instead of four pagelinks. Added pattern to allow subpages
+  relative to current subpage, e.g. if on page /Foo/Bar then ./Xun/Wol
+  will result in a pagelink to /Foo/Bar/Xun/Wol.
+- added support for MSXML v4.
+- lines are joined when a line ends with a whitespace followed by a
+  forward slash (\) character.
+- function s now takes on an unlimited number of submatches !
+- solved bug: WikiWord in a dictionary item didn't transform
+- URL encoding/decoding, CDATAEncoding and PCDATAEncoding should now be
+  perfectly applied whereever necessary.
+- not caching the page when in edit mode (in case an error occurs
+  for whatever reason one can always go back and save the edits)
+- not caching when content type is text/xml (enables "View Source").
+- improved NakedView (able to edit a page by doubleclicking)
+- added ActionPreview, providing better preview feature
+- added new wiki format, strike, e.g.: --strike this--
+- added new macros: <Syndicate("...")> and <Aggregate("...")>,
+  supporting RSS 0.9, 0.91, 0.92 and 1.0 standards.
+- added database tables openwiki_rss and openwiki_rss_aggregations
+- added feature: RSS v1.0 export of recently changed pages
+- class Transformer refactored, caching of stylesheets working correctly now
+- solved bug: after un-deprecating a deprecated page the status
+  as shown in the RecentChanges page remained "deprecated".
+- solved bug: double clicking an old revision page
+- links in edit mode to help pages open up in new window
+- added images: logo.gif, logo_tiny.gif, logo_aggregator.gif,
+                popup.gif, poweredby.gif
+- XML output updated:
+  - version="0.91"
+  - namespace="http://openwiki.com/2001/OW/Wiki"
+  - ow:openwiki element renamed to ow:wiki
+  - ow:wiki element renamed to ow:interlink
+  - ow:interwiki element renamed to ow:interlinks
+  - ow:bookmark element removed. instead ow:link is used
+  - ow:trailmark element removed. instead ow:link is used
+  - ow:nonexistentlink element removed. instead ow:link is used
+  - new element: ow:feed
+  - new element: ow:aggregation
+  - added attribute "href" to element "ow:frontpage"
+  - attribute "time" removed from "ow:link"
+  - element "ow:time" removed from "ow:change"
+  - attribute "date" of "ow:link" and element "ow:date" of "ow:change"
+    now conform to W3C's preferred date and time formats (ISO 8601)
+    see also: http://www.w3.org/TR/NOTE-datetime
+- moved formatDate and formatTime functions from ASP to XSL stylesheet
+  where it properly belongs.
+- added system constant: OPENWIKI_STYLESHEETS
+- added system constant: OPENWIKI_TIMEZONE
+- added system constant: OPENWIKI_MAXNROFAGGR
+- added system constant: OPENWIKI_SCRIPTTIMEOUT
+- added system constant: OPENWIKI_MAXWEBGETS
+- deleted system constant: OPENWIKI_STYLESHEET
+- added system options: cAllowRSSExport, cAllowNewSyndications, cAllowAggregations
+
+---------------------------------------------------------------------------
+
+OpenWiki v0.75:
+
+- moved all configurable options into file owconfig.asp.
+- edits are retained after an update clash.
+- added support for MathML.
+- in ow.xsl: added javascript to template "ow:interwiki".
+- solved bug: in ow.xsl: "View XML" link didn't work for pages in diff mode.
+- solved bug: in ow.xsl: urlencode all references to pagenames in href's.
+- solved bug: in ow.asp: escaping patterns that are input from the user.
+- created/updated a few help pages.
+- cursor focuses in edit area after clicking on Edit.
+- trapping more possible sys admin errors
+- double clicking a page changes the view into edit mode.
+- handling of emoticons perfected.
+- performance improvement by using only 2 instances of the RegExp object
+  instead of creating 2 RegExp objects with every call to function s.
+- added safety check in function s.
+- css validates at w3c.org
+- xsl modified to validate as transitional xhtml v1.0 at w3c.org
+
+' Revision 1.5  2001/09/09 14:52:14  lawrence
+- long lines split over multiple lines in difference engine, giving much
+  improved view of what's been changed.
+- introduced special This: interwiki (see e.g. RecentChanges page)
+- RecentChanges customizable; parameters via url:
+      - days   : nr of days to show        (default = OPENWIKI_RCDAYS = 30)
+      - max    : max nr of changes to show (default = 9999)
+      - filter : 1 = show major edits only (default = 1)
+                 2 = show minor edits only
+                 3 = show minor & major edits
+  Callable via This: interwiki, e.g. This:RecentChanges&days=7&filter=2
+- added system option: cMaskIPAddress
+- minor xsl stylesheet changes:
+- emoticons don't need a whitespace in front of the special characters
+  anymore, only the smileys needs that.
+- netscape fix: added xmldisplay.xsl
+- netscape fix: caching disabled
+- sticking &xml=1 to end of line supported
+- emoticons, more user preferences, improved XML format
+- implemented user preferences
+- Added EnableRemoteHostLookup
+
+
+
+---------------------------------------------------------------------------
+     $Source: /usr/local/cvsroot/openwiki/dist/CHANGES.txt,v $
+   $Revision: 1.5 $
+       $Date: 2002/03/20 09:43:43 $
+     $Author: pit $
+      $State: Exp $
+     $Locker:  $
+---------------------------------------------------------------------------
+- $Log: CHANGES.txt,v $
+- Revision 1.5  2002/03/20 09:43:43  pit
+- no message
+-
+- Revision 1.4  2002/03/19 20:14:35  pit
+- no message
+-
+- Revision 1.3  2002/03/19 07:59:33  pit
+- no message
+-
+- Revision 1.2  2002/03/17 22:24:29  pit
+- no message
+-
+- Revision 1.1  2002/03/03 17:37:12  pit
+- the moderately sober elf
+-
+---------------------------------------------------------------------------
